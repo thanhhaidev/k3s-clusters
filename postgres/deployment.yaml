@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: postgres-server
+  name: postgres-server
+  labels:
+    app: postgres-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-server
+  template:
+    metadata:
+      labels:
+        app: postgres-server
+        name: postgres-server
+    spec:
+      containers:
+        - name: postgres-server
+          image: postgres:13
+          ports:
+            - name: postgres-server
+              containerPort: 5432
+          volumeMounts:
+            - name: postgresdb-storage
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres-data
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+      volumes:
+        - name: postgresdb-storage
+          persistentVolumeClaim:
+            claimName: postgresdb-pvc
