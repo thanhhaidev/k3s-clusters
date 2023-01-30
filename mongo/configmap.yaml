@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: chloeting
+  name: mongodb-config
+  labels:
+    app: mongo-db
+data:
+  MONGO_INITDB_ROOT_USERNAME: chloeting
+  MONGO_INITDB_ROOT_PASSWORD: chloeting
+  MONGO_INITDB_DATABASE: chloeting
